@@ -166,7 +166,7 @@ func Add2ToolsList(toolList map[string]types.ToolsInstaller, flagData map[string
 		TarballPath:           joinOptions.TarballPath,
 	}
 
-	toolList["MQTT"] = &util.MQTTInstTool{}
+	// toolList["MQTT"] = &util.MQTTInstTool{}
 	return nil
 }
 

@@ -50,11 +50,14 @@ const (
 	DebianOSType   = "debian"
 	CentOSType     = "centos"
 
-	KubeEdgeDownloadURL          = "https://github.com/kubeedge/kubeedge/releases/download"
-	OldEdgeServiceFile           = "edge.service"
-	EdgeServiceFile              = "edgecore.service"
-	CloudServiceFile             = "cloudcore.service"
-	ServiceFileURLFormat         = "https://raw.githubusercontent.com/kubeedge/kubeedge/release-%s/build/tools/%s"
+	//KubeEdgeDownloadURL          = "https://github.com/kubeedge/kubeedge/releases/download"
+	KubeEdgeDownloadURL = "https://lyimage.sh1a.qingstor.com/kubeedge"
+
+	OldEdgeServiceFile = "edge.service"
+	EdgeServiceFile    = "edgecore.service"
+	CloudServiceFile   = "cloudcore.service"
+	//ServiceFileURLFormat         = "https://raw.githubusercontent.com/kubeedge/kubeedge/release-%s/build/tools/%s"
+	ServiceFileURLFormat         = "https://lyimage.sh1a.qingstor.com/kubeedge/%s"
 	KubeEdgePath                 = "/etc/kubeedge/"
 	KubeEdgeUsrBinPath           = "/usr/local/bin"
 	KubeEdgeConfPath             = KubeEdgePath + "kubeedge/edge/conf"
@@ -403,10 +406,11 @@ func installKubeEdge(options types.InstallOptions, arch string, version semver.V
 	} else if !os.IsNotExist(err) {
 		return err
 	} else {
-		if err := retryDownload(filename, checksumFilename, version, options.TarballPath); err != nil {
-			return err
-		}
-		return nil
+		//if err := retryDownload(filename, checksumFilename, version, options.TarballPath); err != nil {
+		//	return err
+		//}
+		//return nil
+		return fmt.Errorf("TarFile、checksum files no found!")
 	}
 
 	if err := downloadServiceFile(options.ComponentType, version, KubeEdgePath); err != nil {
@@ -636,8 +640,16 @@ func retryDownload(filename, checksumFilename string, version semver.Version, ta
 		}
 
 		fmt.Printf("%s content: \n", checksumFilename)
-		cmdStr = fmt.Sprintf("wget -qO- %s/v%s/%s", KubeEdgeDownloadURL, version, checksumFilename)
-		desiredChecksum, err := runCommandWithStdout(cmdStr)
+		//cmdStr = fmt.Sprintf("wget -qO- %s/v%s/%s", KubeEdgeDownloadURL, version, checksumFilename)
+		//desiredChecksum, err := runCommandWithStdout(cmdStr)
+		// === WL ADD ===
+		sumFilePath := fmt.Sprintf("%s/%s", KubeEdgePath, checksumFilename)
+		fileContent, err := ioutil.ReadFile(sumFilePath)
+		if err != nil {
+			return err
+		}
+		varTMP := string(fileContent)
+		desiredChecksum := strings.TrimRight(varTMP, "\n")
 		if err != nil {
 			return err
 		}
