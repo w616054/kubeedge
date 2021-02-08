@@ -595,11 +595,16 @@ func checkSum(filename, checksumFilename string, version semver.Version, tarball
 	}
 
 	fmt.Printf("%s content: \n", checksumFilename)
-	cmdStr = fmt.Sprintf("wget -qO- %s/v%s/%s", KubeEdgeDownloadURL, version, checksumFilename)
-	desiredChecksum, err := runCommandWithStdout(cmdStr)
+	//cmdStr = fmt.Sprintf("wget -qO- %s/v%s/%s", KubeEdgeDownloadURL, version, checksumFilename)
+	//desiredChecksum, err := runCommandWithStdout(cmdStr)
+	// === WL ADD ===
+	sumFilePath := fmt.Sprintf("%s/%s", KubeEdgePath, checksumFilename)
+	fileContent, err := ioutil.ReadFile(sumFilePath)
 	if err != nil {
 		return false, err
 	}
+	varTMP := string(fileContent)
+	desiredChecksum := strings.TrimRight(varTMP, "\n")
 
 	if desiredChecksum != actualChecksum {
 		fmt.Printf("Failed to verify the checksum of %s, try to download it again ... \n\n", filename)
