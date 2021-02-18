@@ -160,6 +160,7 @@ func Add2ToolsList(toolList map[string]types.ToolsInstaller, flagData map[string
 		},
 		CloudCoreIP:           joinOptions.CloudCoreIPPort,
 		EdgeNodeName:          joinOptions.EdgeNodeName,
+		EdgeNodeIp:            joinOptions.EdgeNodeIp,
 		RuntimeType:           joinOptions.RuntimeType,
 		CertPath:              joinOptions.CertPath,
 		RemoteRuntimeEndpoint: joinOptions.RemoteRuntimeEndpoint,
