@@ -35,6 +35,9 @@ const (
 	// KubeEdge Node unique idenfitcation string
 	EdgeNodeName = "edgenode-name"
 
+	// KubeEdge Node internal IP reported to K8s cluster
+	EdgeNodeIp = "edgenode-ip"
+
 	// KubeEdge remote-runtime-endpoint string
 	RemoteRuntimeEndpoint = "remote-runtime-endpoint"
 

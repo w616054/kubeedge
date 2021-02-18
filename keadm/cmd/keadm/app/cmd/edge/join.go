@@ -103,6 +103,9 @@ func addJoinOtherFlags(cmd *cobra.Command, joinOptions *types.JoinOptions) {
 	cmd.Flags().StringVarP(&joinOptions.EdgeNodeName, types.EdgeNodeName, "i", joinOptions.EdgeNodeName,
 		"KubeEdge Node unique identification string, If flag not used then the command will generate a unique id on its own")
 
+	cmd.Flags().StringVarP(&joinOptions.EdgeNodeIp, types.EdgeNodeIp, "a", joinOptions.EdgeNodeIp,
+		"KubeEdge Node internal IP reported to K8s cluster, If flag not used then the command will use the IP address read from node network")
+
 	cmd.Flags().StringVarP(&joinOptions.RemoteRuntimeEndpoint, types.RemoteRuntimeEndpoint, "p", joinOptions.RemoteRuntimeEndpoint,
 		"KubeEdge Edge Node RemoteRuntimeEndpoint string, If flag not set, it will use unix:///var/run/dockershim.sock")
 
